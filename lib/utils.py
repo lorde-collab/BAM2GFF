@@ -660,15 +660,9 @@ class Locus:
                 phastBases += lineLen
 
         if phastBases > self.len():
-<<<<<<< HEAD
-            print(("this locus is sad %s. please debug me" % (self.__str__())))
-            print(("locus length is %s" % (self.len())))
-            print(("phastBases are %s" % (phastBases)))
-=======
             print("this locus is sad %s. please debug me" % (self.__str__()))
             print("locus length is %s" % (self.len()))
             print("phastBases are %s" % (phastBases))
->>>>>>> 315804194b3cf8383529ac2df865c9b8e457ab16
 
 
         return phastSum/self.len()
