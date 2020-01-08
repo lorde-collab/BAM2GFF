@@ -5,16 +5,6 @@
 #
 # Edited from Original version 12/11/2019
 
-##############################################################
-# ##### Please replace PATHTO with your own directory ###### #
-##############################################################
-# NOTE: We now assume the PATH and PYTHONPATH has been set up before 
-# entering this script
-#PATHTO=/PATH/TO/BAM2GFF
-#PYTHONPATH=$PATHTO/lib
-#export PYTHONPATH
-#export PATH=$PATH:$PATHTO/src
-
 if [ $# -lt 3 ]; then
   echo ""
   echo 1>&2 Usage: $0 ["GTF file"] ["feature type"] ["BAM file"] ["CHROM SIZES"] ["SAMPLENAME"]
