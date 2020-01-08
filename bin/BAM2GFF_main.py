@@ -117,15 +117,7 @@ def mapBamToGFF(bamFile,gff,sense = 'both',unique = 0,extension = 200,floor = 0,
             MMR = 1
         unique = True
 
-
-
     print(('using a MMR value of %s' % (MMR)))
-<<<<<<< HEAD
-=======
-    
-    senseTrans = maketrans('-+.','+-+')
->>>>>>> 315804194b3cf8383529ac2df865c9b8e457ab16
-
     
     if type(gff) == str:
         gff = parseTable(gff,'\t')
