@@ -40,7 +40,8 @@ CHROMSIZES=$4
 
 #sample name
 SAMPLENAME=$5
-SAMPLENAME=${SAMPLENAME:=${BAMFILE##*/}}
+TEMPFILE=${BAMFILE##*/}
+SAMPLENAME=${SAMPLENAME:=${TEMPFILE%%.*}}
 
 echo "#############################################"
 echo "######            BAM2GFF v1           ######"
