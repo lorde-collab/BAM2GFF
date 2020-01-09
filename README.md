@@ -13,14 +13,14 @@ Executable anywhere as long as the PATHTO is correctly specified.
 
     ├── README.md
 
-    ├── BAM2GFF-call.sh    : bash wrapper
+    ├── BAM2GFF-call.sh    : bash wrapper script
 
     ├── lib
 
         └── utils.py   : utilities method
     │   
 
-    └── src
+    └── bin
     
         ├── BAM2GFF_main.py    : calculates density of .bam reads in .gff regions
     
@@ -35,7 +35,7 @@ Executable anywhere as long as the PATHTO is correctly specified.
 
 	* samtools
 	* R version > 3.4
-	* python2
+	* python3
 
 
 =================================================================

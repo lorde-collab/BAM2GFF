@@ -493,6 +493,7 @@ dev.off();
 #extrapolate breaks & colz
 remainder = round((quantile(as.vector(t(promoters[,3:ncol(promoters)])),.80)),digits=0) %% 2;
 finalcount = round((quantile(as.vector(t(promoters[,3:ncol(promoters)])),.80)),digits=0) + remainder;
+if (finalcount < 2) { finalcount = 2; } #adjusting for lack of variability in bam density scores
 colz=colorRampPalette(c("white", "red"))(finalcount);
 breaks=seq(0,finalcount,by=1);
 
@@ -505,6 +506,7 @@ dev.off()
 
 remainder = round((quantile(as.vector(t(combined[,3:ncol(combined)])),.80)),digits=0) %% 2
 finalcount = round((quantile(as.vector(t(combined[,3:ncol(combined)])),.80) + remainder),digits=0) + remainder
+if (finalcount < 2) { finalcount = 2; } #adjusting for lack of variability in bam density scores
 colz=colorRampPalette(c("white", "red"))(finalcount)
 breaks=seq(0,finalcount,by=1)
 

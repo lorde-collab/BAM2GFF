@@ -1,18 +1,9 @@
 #!/bin/bash
 #
 # BAM TO GFF to detect Read density across gene transcripting regions
+# Template wrapper shell script
 #
 # Edited from Original version 12/11/2019
-
-##############################################################
-# ##### Please replace PATHTO with your own directory ###### #
-##############################################################
-# NOTE: We now assume the PATH and PYTHONPATH has been set up before 
-# entering this script
-#PATHTO=/PATH/TO/BAM2GFF
-#PYTHONPATH=$PATHTO/lib
-#export PYTHONPATH
-#export PATH=$PATH:$PATHTO/src
 
 if [ $# -lt 3 ]; then
   echo ""
@@ -39,7 +30,8 @@ CHROMSIZES=$4
 
 #sample name
 SAMPLENAME=$5
-SAMPLENAME=${SAMPLENAME:=BAMFILE##*/}
+TEMPFILE=${BAMFILE##*/}
+SAMPLENAME=${SAMPLENAME:=${TEMPFILE%%.*}}
 
 echo "#############################################"
 echo "######            BAM2GFF v1           ######"
@@ -61,16 +53,20 @@ echo
 # BAM TO GFF main code
 #
 mkdir -p matrix
-echo "Working on GeneBody Region\nBAM2GFF_main.py -b $BAMFILE -i annotation/genes.gff -m 100 -o matrix/genebody.txt"
+echo "Working on GeneBody Region"
+echo "BAM2GFF_main.py -b $BAMFILE -i annotation/genes.gff -m 100 -o matrix/genebody.txt"
 BAM2GFF_main.py -b $BAMFILE -i annotation/genes.gff -m 100 -o matrix/genebody.txt
 echo
-echo "Working on Upstream Region\nBAM2GFF_main.py -b $BAMFILE -i annotation/upstream.gff -m 50 -o matrix/upstream.txt"
+echo "Working on Upstream Region"
+echo "BAM2GFF_main.py -b $BAMFILE -i annotation/upstream.gff -m 50 -o matrix/upstream.txt"
 BAM2GFF_main.py -b $BAMFILE -i annotation/upstream.gff -m 50 -o matrix/upstream.txt
 echo
-echo "Working on Downstream Region\nBAM2GFF_main.py -b $BAMFILE -i annotation/downstream.gff -m 50 -o matrix/downstream.txt"
+echo "Working on Downstream Region"
+echo "BAM2GFF_main.py -b $BAMFILE -i annotation/downstream.gff -m 50 -o matrix/downstream.txt"
 BAM2GFF_main.py -b $BAMFILE -i annotation/downstream.gff -m 50 -o matrix/downstream.txt
 echo
-echo "Working on Promoter Region\nBAM2GFF_main.py -b $BAMFILE -i annotation/promoters.gff -m 100 -o matrix/promoters.txt"
+echo "Working on Promoter Region"
+echo "BAM2GFF_main.py -b $BAMFILE -i annotation/promoters.gff -m 100 -o matrix/promoters.txt"
 BAM2GFF_main.py -b $BAMFILE -i annotation/promoters.gff -m 100 -o matrix/promoters.txt
 echo
 
