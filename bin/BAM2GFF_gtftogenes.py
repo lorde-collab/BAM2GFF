@@ -33,6 +33,8 @@ def parsingGeneLocations(CHR, results):
     downstart = 1
   if upstart < 1:
     upstart = 1
+  if start < 1:
+    start = 1
     
   if upend > int(CHR[lines[0]]):
     upend = CHR[lines[0]]
