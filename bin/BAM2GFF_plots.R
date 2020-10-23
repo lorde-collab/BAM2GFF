@@ -459,17 +459,34 @@ heatmap.3 <- function(x,
 #=================================PLOT HEATMAPS==============================
 #============================================================================
 
-#read in original files
-args <- commandArgs()
-#print('THESE ARE THE ARGUMENTS')
-#print(args)
+suppressPackageStartupMessages(require(optparse))
+
+option_list <- list(
+    make_option(c("-f", "--folder"), type='character', default="matrix",
+        help="Folder containing matrix files generated"),
+    make_option(c("-n", "--name"), type='character', default=NA, 
+        help="Sample Name"),
+    make_option(c("-d", "--distance"), type='integer', default=2000,
+        help="Distance (bp) from TSS/TES")
+    )
+
+opt = parse_args(OptionParser(option_list=option_list))
+
+if (is.na(opt$n)) {
+    stop("Sample Name must be provided. See script usage (--help)")
+}
 
 #ARGS
-promoters <- read.table("matrix/promoters.txt", sep="\t", header=T);
-upstream <- read.table("matrix/upstream.txt", sep="\t", header=T);
-downstream <- read.table("matrix/downstream.txt", sep="\t", header=T);
-genebody <- read.table("matrix/genebody.txt", sep="\t", header=T);
-samplename = args[6]
+folder = opt$f
+samplename = opt$n
+distance = round(opt$d/1000,1)
+
+#input files
+promoters <- read.table(paste(folder,"/promoters.txt",sep=""), sep="\t", header=T);
+upstream <- read.table(paste(folder,"/upstream.txt",sep=""), sep="\t", header=T);
+downstream <- read.table(paste(folder,"/downstream.txt",sep=""), sep="\t", header=T);
+genebody <- read.table(paste(folder,"/genebody.txt",sep=""), sep="\t", header=T);
+
 
 #combining entire genebody
 combined<-cbind(upstream[,3:ncol(upstream)], genebody[,3:ncol(genebody)], downstream[,3:ncol(downstream)]);
@@ -480,12 +497,12 @@ combined<-na.omit(combined)
 
 #matplot of promoters & genebody
 pdf(paste(samplename, "-promoters.pdf",sep=""))
-matplot(colMeans(promoters[,3:ncol(promoters)]), type='l', main=paste(samplename, "Promoters",sep=" "), ylab="Average normalized mapped reads", xlim=NULL, xaxt='n', xlab="Genomic Region")
-axis(1, at=c(0,50,100), labels=c("-50", "TSS", "50"))
+matplot(colMeans(promoters[,3:ncol(promoters)]), type='l', main=paste(samplename, "Promoters",sep=" "), ylab="Average normalized mapped reads", xlim=NULL, xaxt='n', xlab="Genomic Region (bp)")
+axis(1, at=c(0,50,100), labels=c(paste("-",distance,"kb",sep=""), "TSS", paste("+",distance,"kb",sep="")))
 dev.off();
 pdf(paste(samplename, "-entiregene.pdf",sep=""));
-matplot(colMeans(combined),type='l',main=paste(samplename, "MetaGenes",sep=" "), ylab="Average normalized mapped reads", xlim=NULL, xaxt='n', xlab="Genomic Region");
-axis(1, at=c(0,50,83,116,150,200), labels=c("-50", "TSS", "33%","66%", "TES", "50"));
+matplot(colMeans(combined),type='l',main=paste(samplename, "MetaGenes",sep=" "), ylab="Average normalized mapped reads", xlim=NULL, xaxt='n', xlab="Genomic Region (bp)");
+axis(1, at=c(0,50,83,116,150,200), labels=c(paste("-",distance,"kb",sep=""), "TSS", "33%","66%", "TES", paste("+",distance,"kb",sep="")));
 dev.off();
 
 #heatmap of promoters & genebody
