@@ -100,13 +100,13 @@ def main():
             for line in gff_file:
                 if not line.startswith('#'):
                     lines = line.split("\t")
-                if lines[2] == feature:
-                    newline = lines[8].split(' ')
-                    results = ("chr{0}\t{1}\t{2}={3}".format(lines[0],
-                                                                     "\t".join(lines[1:8]),
-                                                                     newline[0], newline[1]))
-                    PSEUDOGFF.write(results + "\n")
-                    parse_genelocations(chrom_sizes, results, flank)
+                    if lines[2] == feature:
+                        newline = lines[8].split(' ')
+                        results = ("chr{0}\t{1}\t{2}={3}".format(lines[0],
+                                                                 "\t".join(lines[1:8]),
+                                                                 newline[0], newline[1]))
+                        PSEUDOGFF.write(results + "\n")
+                        parse_genelocations(chrom_sizes, results, flank)
     else:
         parser.print_help()
 
