@@ -82,7 +82,7 @@ def main():
         chrom_sizes = {}
         for line in chromsizefile:
             line = line.split('\t')
-            chrom_sizes[line[0]] = line[1]
+            chrom_sizes[line[0]] = line[1].rstrip("\n")
 
         feature = options.feature
 
